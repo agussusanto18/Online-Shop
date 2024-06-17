@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print PDF</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <style>
+        body{
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <table data-tw-merge="" class="w-full text-left border-b border-slate-200/60">
+        <thead data-tw-merge="" class="">
+            <tr data-tw-merge="" class="">
+                <td>
+                    
+                </td>
+                <td>
+                    Name
+                </td>
+                <td>
+                    Slug
+                </td>
+                <td>
+                    Tags
+                </td>
+                <td>
+                    Total Products
+                </td>
+                <td>
+                    Status
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+    
+            <% categories.forEach(category=> { %>
+    
+                <tr>
+                    <td>
+                      
+                    </td>
+                    <td>
+                        <%= category.name %>
+                    </td>
+                    <td>
+                        /<%= category.slug %>
+                    </td>
+                    <td>
+                        <%= category.tags.join(', ') %>
+                    </td>
+                    <td>
+                        <%= category.totalProducts %>
+                    </td>
+                    <td>
+                        <%= category.status %>
+                    </td>
+                </tr>
+    
+                <% }) %>
+    
+        </tbody>
+    </table>
+
+    <script>
+        window.print()
+    </script>
+</body>
+</html>
