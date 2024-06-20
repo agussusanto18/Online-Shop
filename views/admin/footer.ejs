@@ -6,6 +6,7 @@
 <script src="/js/tailwind-merge.js"></script>
 <script src="/js/lucide_1.js"></script>
 <script src="/js/dayjs.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
 <script src="/js/litepicker.js"></script>
 <script src="/js/tiny-slider_1.js"></script>
 <script src="/js/popper.js"></script>
@@ -27,6 +28,14 @@
 <script src="/js/echo.js"></script>
 <script src="/js/quick-search.js"></script> <!-- END: Vendor JS Assets-->
 <script src="/js/alert.js"></script>
+
+<script>
+    new TomSelect(".tom-select", {
+            persist: false,
+            createOnBlur: true,
+            create: true
+        });
+</script>
 
 <!-- BEGIN: Pages, layouts, components JS Assets-->
 <!-- END: Pages, layouts, components JS Assets-->

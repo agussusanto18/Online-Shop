@@ -40,7 +40,11 @@ const productSchema = new mongoose.Schema({
     productSize: {
         type: String, // Size format e.g., "10x5x2 cm"
         required: true
-    }
+    },
+    rated: {
+        type: Number,
+        default: 0
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Product', productSchema);

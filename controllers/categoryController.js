@@ -90,3 +90,120 @@ exports.exportCategoriesToCSV = async (req, res) => {
         res.redirect('/categories'); // Redirect to categories list with error message
     }
 };
+
+
+// Get all categories and render the index page
+exports.createCategory = async (req, res) => {
+    try {
+        res.render('admin/category/form', {
+            isUpdate: false,
+            name: '',
+            slug: '',
+            tags: '',
+            status: null,
+            success_msg: req.flash('success_msg')[0] || null,
+            error_msg: req.flash('error_msg')[0] || null,
+        });
+    } catch (error) {
+        req.flash('error_msg', 'Failed to load categories');
+        res.redirect('/admin/categories');
+    }
+};
+
+exports.createCategoryPost = async (req, res) => {
+    try {
+        let { submit_value, name, slug, tags, status } = req.body;
+        let error_msg = "";
+
+        if (!name || !slug || !tags) {
+            error_msg = 'Please fill in all fields';
+        }
+
+        if (error_msg) {
+            return res.render('admin/category/form', {
+                isUpdate: false,
+                error_msg,
+                success_msg: '',
+                name,
+                slug,
+                tags,
+                status
+            });
+        }
+
+        let totalProducts = 0;
+        status = status ? 'active' : 'inactive';
+        const newCategory = new Category({ name, tags, slug, totalProducts, status });
+        await newCategory.save();
+
+        req.flash('success_msg', 'Category created successfully');
+        if (submit_value === 'save_add_new') {
+            res.redirect('/admin/categories/create');
+        } else {
+            res.redirect('/admin/categories');
+        }
+    } catch (error) {
+        req.flash('error_msg', 'Failed to create category');
+        res.redirect('/admin/categories');
+    }
+};
+
+exports.updateCategory = async (req, res) => {
+    try {
+        const _id = req.params.id;
+        const category = await Category.findOne({ _id });
+
+        res.render('admin/category/form', {
+            isUpdate: true,
+            _id,
+            name: category.name,
+            slug: category.slug,
+            tags: category.tags,
+            status: category.status === 'active' ? 'active' : null,
+            success_msg: req.flash('success_msg')[0] || null,
+            error_msg: req.flash('error_msg')[0] || null,
+        });
+    } catch (error) {
+        req.flash('error_msg', 'Failed to load categories');
+        res.redirect('/admin/categories');
+    }
+};
+
+exports.updateCategoryPost = async (req, res) => {
+    try {
+        const _id = req.params.id;
+        let { name, slug, tags, status } = req.body;
+        let error_msg = "";
+
+        if (!name || !slug || !tags) {
+            error_msg = 'Please fill in all fields';
+        }
+
+        if (error_msg) {
+            return res.render('admin/category/form', {
+                _id,
+                isUpdate: true,
+                error_msg,
+                success_msg: '',
+                name,
+                slug,
+                tags,
+                status
+            });
+        }
+
+        status = status ? 'active' : 'inactive';
+        const category = await Category.findOne({ _id });
+        category.name = name;
+        category.slug = slug;
+        category.tags = tags;
+        category.status = status;
+        await category.save();
+
+        req.flash('success_msg', 'Category updated successfully');
+        res.redirect('/admin/categories');
+    } catch (error) {
+        req.flash('error_msg', 'Failed to update category');
+        res.redirect('/admin/categories');
+    }
+};
