@@ -117,6 +117,23 @@ exports.signupProcess = async (req, res) => {
             });
         }
 
+        // const transporter = nodemailer.createTransport({
+        //     service: 'gmail',
+        //     auth: {
+        //         user: process.env.EMAIL, 
+        //         pass: process.env.PASS,
+        //     }
+        // });
+    
+        // const mailOptions = {
+        //     from: process.env.EMAIL,
+        //     to: email,
+        //     subject: 'Welcome to Our Service',
+        //     text: `Hello ${name},\n\nThank you for signing up!`,
+        // };
+
+        // await transporter.sendMail(mailOptions);
+
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({ username, email, password: hashedPassword });
         await newUser.save();

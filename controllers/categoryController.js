@@ -2,6 +2,7 @@ const Category = require('../models/category'); // Import the Category model
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const json2csv = require('json2csv').Parser;
+const axios = require('axios');
 
 // Get all categories and render the index page
 exports.getAllCategories = async (req, res) => {
@@ -205,5 +206,14 @@ exports.updateCategoryPost = async (req, res) => {
     } catch (error) {
         req.flash('error_msg', 'Failed to update category');
         res.redirect('/admin/categories');
+    }
+};
+
+exports.getCategoriesAPI = async (req, res) => {
+    try {
+        const response = await axios.get('http://localhost:3000/admin/api/categories');
+        res.status(200).json(response.data);
+    } catch (error) {
+        next(error);
     }
 };

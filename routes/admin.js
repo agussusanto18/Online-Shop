@@ -15,9 +15,12 @@ router.get('/categories/create', auth.isAuthenticated, categoryController.create
 router.post('/categories/create', auth.isAuthenticated, categoryController.createCategoryPost);
 router.get('/categories/:id/update', auth.isAuthenticated, categoryController.updateCategory);
 router.post('/categories/:id/update', auth.isAuthenticated, categoryController.updateCategoryPost);
+router.get('/categories-api', categoryController.getCategoriesAPI)
 
 router.get('/products', auth.isAuthenticated, productController.index);
 router.get('/products/:id/delete', auth.isAuthenticated, productController.deleteProduct);
+router.get('/products/create', auth.isAuthenticated, productController.createProduct);
+router.post('/products/create', auth.isAuthenticated, productController.createProductPost);
 
 router.get('/transactions', auth.isAuthenticated, transactionController.index);
 

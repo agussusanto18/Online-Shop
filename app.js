@@ -10,6 +10,7 @@ const config = require('./config/config');
 const mongoose = require('mongoose');
 const authRouter = require('./routes/auth');
 const adminRouter = require('./routes/admin');
+const adminApiRouter = require('./routes/api/admin');
 
 const PORT = process.env.PORT || 3000;
 
@@ -28,9 +29,11 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+
 app.use(flash());
 app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
+app.use('/admin/api', adminApiRouter);
 
 
 app.get('/', (req, res) => {
